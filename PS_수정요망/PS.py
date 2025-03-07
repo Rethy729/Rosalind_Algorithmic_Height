@@ -8,7 +8,7 @@ def heapify(lst, idx, maximum): #this idx is 1-based, maximum is the upper bound
 
     largest = idx
     left = 2 * idx
-    right = 2 * idx +1
+    right = 2 * idx+1
 
     if left <= maximum and lst[left-1] > lst[largest-1]:
         largest = left
