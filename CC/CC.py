@@ -34,7 +34,6 @@ total_connect = []
 for node in range(1, node_max+1):
     connected = []
     if visited_bool[node] == False:
-                 
         DFS(node, visited_bool, connected)
         total_connect.append(connected)
 
