@@ -1,3 +1,5 @@
+#the dataset in Rosalind includes some awful nodes like : 234 546 133 /  234 546 664 -> in this case, we have to leave the minimum weight among the repeated appearance of edge
+
 data = open('rosalind_dij.txt', 'r')
 rawdata = data.read()
 rawdata_1 = rawdata.split('\n')
@@ -15,8 +17,12 @@ graph = {}
 for i in range(max_edge+1):                     #1_based_indexing
     graph[i+1] = {}
 
-for pair in edge:                               #pair[0]: start node, pair[1]: end node, pair[2]: weight
-    graph[pair[0]][pair[1]] = pair[2]           #For example. 1 2 4 / 1 3 5 / 1 9 2 /2 3 5-> {1:{2:4, 3:5, 9:2}, 2:{3:5}}
+for pair in edge: #pair[0]: start node, pair[1]: end node, pair[2]: weight
+    if pair[1] in graph[pair[0]]:
+        if pair[2] < graph[pair[0]][pair[1]]:
+            graph[pair[0]][pair[1]] = pair[2]
+    else:
+        graph[pair[0]][pair[1]] = pair[2]           #For example. 1 2 4 / 1 3 5 / 1 9 2 /2 3 5-> {1:{2:4, 3:5, 9:2}, 2:{3:5}}
 
 def DIJ(max_node):
 
@@ -41,7 +47,6 @@ def DIJ(max_node):
 
         if count == 0:
             break
-        
     return weighted_distance
 
 answer = [0]
