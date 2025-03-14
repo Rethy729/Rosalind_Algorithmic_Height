@@ -3,6 +3,7 @@ from collections import deque
 f = open('rosalind_dag.txt', 'r')
 data = f.read()
 data_split = data[:-1].split('\n\n')
+
 def graph(max_node, edges):
     graph = {}
     for i in range(max_node):
