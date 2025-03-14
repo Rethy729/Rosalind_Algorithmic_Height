@@ -56,3 +56,5 @@ def data_processing(data):
     return answer
 
 print (' '.join(map(str, data_processing(data_split))))
+
+#we have to consider isolated graph -> do BFS until distance_lst does not have -1, reset the start node with the first node which has -1 in distance_lst
