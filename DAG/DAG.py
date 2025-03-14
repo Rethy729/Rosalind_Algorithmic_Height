@@ -16,16 +16,19 @@ def DFS(graph, start_node, visited_bool):
 
     dfs_stack = deque()
     dfs_stack.append(start_node)
-
+    cc = []
     while dfs_stack:
         v = dfs_stack.pop()
+        cc.append(v)
         if visited_bool[v] == False:
             visited_bool[v] = True
             for arr_node in graph[v]:
                 if arr_node == start_node:
-                    return True
+                    return cc, True
                 else:
                     dfs_stack.append(arr_node)
+                    cc.append(arr_node)
+    return cc, False
 
 def data_processing(data):
     n = int(data[0])
@@ -38,14 +41,17 @@ def data_processing(data):
             edges_data.append(list(map(int, edge.split())))
 
         graph_data = graph(max_node, edges_data)
-
+        visited_bool = [False] * (max_node + 1)
         cycle_bool = False
         for i in range(1, max_node + 1):
-            visited_bool = [False] * (max_node + 1)
-            cycle_bool = DFS(graph_data, i, visited_bool)
-            if cycle_bool:
-                answer.append(-1)
-                break
+            if visited_bool[i] == False:
+                cc, cycle_bool = DFS(graph_data, i, visited_bool)
+                if cycle_bool:
+                    answer.append(-1)
+                    break
+                elif not cycle_bool:
+                    for node in cc:
+                        visited_bool[node] = True
         if not cycle_bool:
             answer.append(1)
 
